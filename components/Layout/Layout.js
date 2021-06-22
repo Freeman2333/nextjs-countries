@@ -5,6 +5,11 @@ import { Brightness6Rounded } from "@material-ui/icons";
 import styles from "./Layout.module.css";
 
 const Layout = ({children, title="World Ranks"}) => {
+  // const [theme, setTheme] = useState("light")
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme","light")
+  }, [])
   return (
     <div className={styles.container}>
       <Head>
@@ -41,7 +46,8 @@ const Layout = ({children, title="World Ranks"}) => {
         </Link>
         <button className={styles.themeSwitcher}><Brightness6Rounded /></button>
       </header>
-      
+      <main className={styles.main}>{children}</main>
+      <footer className={styles.footer}>freeman production</footer>
     </div>
   )
 }
