@@ -6,17 +6,65 @@ import {
 import { useState } from "react";
 import styles from "./CountriesTable.module.css";
 
-const CountriesTable = ({countries}) => {
+const orderBy = (countries, value, direction) => {
+  if (direction === "asc") {
+    return [...countries].sort((a, b) => (a[value] > b[value] ? 1 : -1));
+  }
+
+  if (direction === "desc") {
+    return [...countries].sort((a, b) => (a[value] > b[value] ? -1 : 1));
+  }
+
+  return countries;
+};
+
+const SortArrow = ({ direction }) => {
+  if (!direction) {
+    return <></>;
+  }
+
+  if (direction === "desc") {
+    return (
+      <div className={styles.heading_arrow}>
+        <KeyboardArrowDownRounded color="inherit" />
+      </div>
+    );
+  } else {
+    return (
+      <div className={styles.heading_arrow}>
+        <KeyboardArrowUpRounded color="inherit" />
+      </div>
+    );
+  }
+};
+
+const CountriesTable = ({ countries }) => {
+  const [direction, setDirection] = useState();
+  const [value, setValue] = useState();
+
+  const orderedCountries = orderBy(countries, value, direction);
   return (
     <div>
       <div className={styles.heading}>
         <div className={styles.heading_flag}></div>
-        <button className={styles.heading_name} onClick={()=>{}}><div>Name</div></button>
-        <button className={styles.heading_population} onClick={()=>{}}><div>Population</div></button>
-        <button className={styles.heading_area} onClick={()=>{}}><div>Area</div></button>
-        <button className={styles.heading_gini} onClick={()=>{}}><div>Gini</div></button>
+        <button className={styles.heading_name} onClick={() => {}}>
+          <div>Name</div>
+          {value === "name" && <SortArrow direction={direction} />}
+        </button>
+        <button className={styles.heading_population} onClick={() => {}}>
+          <div>Population</div>
+          {value === "name" && <SortArrow direction={direction} />}
+        </button>
+        <button className={styles.heading_area} onClick={() => {}}>
+          <div>Area</div>
+          {value === "name" && <SortArrow direction={direction} />}
+        </button>
+        <button className={styles.heading_gini} onClick={() => {}}>
+          <div>Gini</div>
+          {value === "name" && <SortArrow direction={direction} />}
+        </button>
       </div>
-      {countries.map(country=>(
+      {orderedCountries.map((country) => (
         <Link href={`/country/${country.alpha3Code}`} key={country.name}>
           <div className={styles.row}>
             <div className={styles.flag}>
@@ -30,7 +78,7 @@ const CountriesTable = ({countries}) => {
         </Link>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default CountriesTable
+export default CountriesTable;
