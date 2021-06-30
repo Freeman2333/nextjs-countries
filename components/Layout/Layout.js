@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { Brightness6Rounded } from "@material-ui/icons";
 import styles from "./Layout.module.css";
 
-const Layout = ({children, title="World Ranks"}) => {
-  const [theme, setTheme] = useState("light")
+const Layout = ({ children, title = "World Ranks" }) => {
+  const [theme, setTheme] = useState("light");
 
   useEffect(() => {
     document.documentElement.setAttribute(
@@ -29,12 +29,14 @@ const Layout = ({children, title="World Ranks"}) => {
     localStorage.setItem("theme", theme);
     document.documentElement.setAttribute("data-theme", theme);
   };
+
   return (
     <div className={styles.container}>
       <Head>
         <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <header className={styles.header}>
         <Link href="/">
           <svg
@@ -63,12 +65,17 @@ const Layout = ({children, title="World Ranks"}) => {
             <rect y="4" width="7.33333" height="4.4" rx="2" fill="#21B6B7" />
           </svg>
         </Link>
-        <button className={styles.themeSwitcher}><Brightness6Rounded /></button>
-      </header>
-      <main className={styles.main}>{children}</main>
-      <footer className={styles.footer}>freeman production</footer>
-    </div>
-  )
-}
 
-export default Layout
+        <button className={styles.themeSwitcher} onClick={switchTheme}>
+          <Brightness6Rounded />
+        </button>
+      </header>
+
+      <main className={styles.main}>{children}</main>
+
+      <footer className={styles.footer}>Thu Nghiem @ devchallenges.io</footer>
+    </div>
+  );
+};
+
+export default Layout;
